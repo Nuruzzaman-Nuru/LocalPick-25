@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/auth/(.*)", "dest": "/Frontend/auth/$1" },
+    { "src": "/", "dest": "/Frontend/home.html" },
+    { "src": "/(.*)", "dest": "/Frontend/$1" }
+  ]
+}
