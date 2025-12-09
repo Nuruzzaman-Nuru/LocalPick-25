@@ -36,7 +36,7 @@
     <div class="container auth-grid">
       <div class="auth-card">
         <p class="eyebrow">Create account</p>
-        <h1>Join the LocalPick community</h1>
+        <h1>Create Account</h1>
 
         <form class="auth-form" id="register-form" novalidate>
           <label class="input-group">
@@ -52,13 +52,13 @@
             </div>
           </label>
 
-          <div id="form-fields" class="form-fields">
+          <div id="form-fields" class="form-fields show">
             <div class="form-row gap">
               <label class="input-group">
                 <span>Full Name</span>
                 <div class="input-field">
                   <i class="bi bi-person"></i>
-                  <input type="text" name="name" id="full-name" placeholder="Alex Doe" minlength="3" required disabled>
+                  <input type="text" name="name" id="full-name" placeholder="Alex Doe" minlength="3" required>
                 </div>
               </label>
 
@@ -66,7 +66,7 @@
                 <span>Phone</span>
                 <div class="input-field">
                   <i class="bi bi-phone"></i>
-                  <input type="tel" name="phone" id="phone" placeholder="017XXXXXXXX" pattern="[0-9]{11}" required disabled>
+                  <input type="tel" name="phone" id="phone" placeholder="017XXXXXXXX" pattern="[0-9]{11}" required>
                 </div>
               </label>
             </div>
@@ -75,7 +75,7 @@
               <span>Email</span>
               <div class="input-field">
                 <i class="bi bi-envelope"></i>
-                <input type="email" name="email" id="email" placeholder="you@example.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required disabled>
+                <input type="email" name="email" id="email" placeholder="you@example.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
               </div>
             </label>
 
@@ -84,7 +84,7 @@
                 <span>Password</span>
                 <div class="input-field">
                   <i class="bi bi-lock"></i>
-                  <input type="password" name="password" id="password" placeholder="Create a password" minlength="6" required disabled>
+                  <input type="password" name="password" id="password" placeholder="Create a password" minlength="6" required>
                 </div>
               </label>
 
@@ -92,7 +92,7 @@
                 <span>Confirm Password</span>
                 <div class="input-field">
                   <i class="bi bi-shield-check"></i>
-                  <input type="password" name="confirm_password" id="confirm-password" placeholder="Re-enter password" required disabled>
+                  <input type="password" name="confirm_password" id="confirm-password" placeholder="Re-enter password" required>
                 </div>
               </label>
             </div>
@@ -101,16 +101,16 @@
               <span>Address</span>
               <div class="input-field textarea-field">
                 <i class="bi bi-geo-alt"></i>
-                <textarea name="address" id="address" rows="3" placeholder="House, road, area, city" required disabled></textarea>
+                <textarea name="address" id="address" rows="3" placeholder="House, road, area, city" required></textarea>
               </div>
             </label>
 
             <label class="checkbox">
-              <input type="checkbox" name="terms" id="terms" required disabled>
+              <input type="checkbox" name="terms" id="terms" required>
               <span>I agree to the <a class="text-link" href="#">Terms &amp; Conditions</a></span>
             </label>
 
-            <button type="submit" class="primary-btn full" disabled>Create Account</button>
+            <button type="submit" class="primary-btn full solid">Register</button>
           </div>
         </form>
 
@@ -154,20 +154,8 @@
       const form = document.getElementById("register-form");
       if (!form) return;
 
-      const roleSelect = document.getElementById("role");
-      const formFields = document.getElementById("form-fields");
       const password = document.getElementById("password");
       const confirmPassword = document.getElementById("confirm-password");
-
-      function toggleFields() {
-        const active = Boolean(roleSelect.value);
-        formFields.classList.toggle("show", active);
-        formFields.querySelectorAll("input, textarea, button").forEach((el) => {
-          if (el.type === "hidden") return;
-          el.disabled = !active;
-        });
-        roleSelect.setCustomValidity(active ? "" : "Please select a role.");
-      }
 
       function checkPasswords() {
         if (!password.value || !confirmPassword.value) {
@@ -179,12 +167,10 @@
         );
       }
 
-      roleSelect.addEventListener("change", toggleFields);
       password.addEventListener("input", checkPasswords);
       confirmPassword.addEventListener("input", checkPasswords);
 
       form.addEventListener("submit", (event) => {
-        toggleFields();
         checkPasswords();
         if (!form.checkValidity()) {
           event.preventDefault();
@@ -192,7 +178,6 @@
         }
       });
 
-      toggleFields();
     })();
   </script>
 </body>
