@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register | LocalShop</title>
+  <title>Register | LocalPick</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="../static/css/styles.css">
 </head>
-<body class="auth-body">
+<body class="auth-body auth-centered">
   <header class="nav-shell">
     <div class="container nav-bar">
       <div class="brand">
         <i class="bi bi-bag-check-fill"></i>
-        <span class="brand-name">LocalShop</span>
+        <span class="brand-name">LocalPick</span>
       </div>
       <nav class="nav-links">
         <a href="../home.html">Home</a>
         <a href="../home.html#products">Shop Now</a>
-        <a href="../home.html#about">About LocalShop</a>
+        <a href="../home.html#about">About LocalPick</a>
         <a href="../home.html#contact">Contact</a>
       </nav>
       <div class="nav-actions">
@@ -36,60 +36,82 @@
     <div class="container auth-grid">
       <div class="auth-card">
         <p class="eyebrow">Create account</p>
-        <h1>Join the LocalShop community</h1>
-        <p class="auth-sub">Track local deals, negotiate prices, and check nearby stock instantly.</p>
+        <h1>Join the LocalPick community</h1>
 
-        <form class="auth-form">
-          <div class="form-row gap">
-            <label class="input-group">
-              <span>Full Name</span>
-              <div class="input-field">
-                <i class="bi bi-person"></i>
-                <input type="text" name="name" placeholder="Alex Doe" required>
-              </div>
-            </label>
-
-            <label class="input-group">
-              <span>Phone</span>
-              <div class="input-field">
-                <i class="bi bi-phone"></i>
-                <input type="tel" name="phone" placeholder="+8801XXXXXXXXX" required>
-              </div>
-            </label>
-          </div>
-
+        <form class="auth-form" id="register-form" novalidate>
           <label class="input-group">
-            <span>Email</span>
-            <div class="input-field">
-              <i class="bi bi-envelope"></i>
-              <input type="email" name="email" placeholder="you@example.com" required>
+            <span>Select User Role</span>
+            <div class="input-field select-field">
+              <i class="bi bi-people"></i>
+              <select id="role" name="role" required>
+                <option value="">Choose your role...</option>
+                <option value="user">Customer</option>
+                <option value="shop_owner">Shop Owner</option>
+                <option value="delivery">Delivery Person</option>
+              </select>
             </div>
           </label>
 
-          <div class="form-row gap">
+          <div id="form-fields" class="form-fields">
+            <div class="form-row gap">
+              <label class="input-group">
+                <span>Full Name</span>
+                <div class="input-field">
+                  <i class="bi bi-person"></i>
+                  <input type="text" name="name" id="full-name" placeholder="Alex Doe" minlength="3" required disabled>
+                </div>
+              </label>
+
+              <label class="input-group">
+                <span>Phone</span>
+                <div class="input-field">
+                  <i class="bi bi-phone"></i>
+                  <input type="tel" name="phone" id="phone" placeholder="017XXXXXXXX" pattern="[0-9]{11}" required disabled>
+                </div>
+              </label>
+            </div>
+
             <label class="input-group">
-              <span>Password</span>
+              <span>Email</span>
               <div class="input-field">
-                <i class="bi bi-lock"></i>
-                <input type="password" name="password" placeholder="Create a password" required>
+                <i class="bi bi-envelope"></i>
+                <input type="email" name="email" id="email" placeholder="you@example.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required disabled>
               </div>
             </label>
 
+            <div class="form-row gap">
+              <label class="input-group">
+                <span>Password</span>
+                <div class="input-field">
+                  <i class="bi bi-lock"></i>
+                  <input type="password" name="password" id="password" placeholder="Create a password" minlength="6" required disabled>
+                </div>
+              </label>
+
+              <label class="input-group">
+                <span>Confirm Password</span>
+                <div class="input-field">
+                  <i class="bi bi-shield-check"></i>
+                  <input type="password" name="confirm_password" id="confirm-password" placeholder="Re-enter password" required disabled>
+                </div>
+              </label>
+            </div>
+
             <label class="input-group">
-              <span>Confirm Password</span>
-              <div class="input-field">
-                <i class="bi bi-shield-check"></i>
-                <input type="password" name="confirm_password" placeholder="Re-enter password" required>
+              <span>Address</span>
+              <div class="input-field textarea-field">
+                <i class="bi bi-geo-alt"></i>
+                <textarea name="address" id="address" rows="3" placeholder="House, road, area, city" required disabled></textarea>
               </div>
             </label>
+
+            <label class="checkbox">
+              <input type="checkbox" name="terms" id="terms" required disabled>
+              <span>I agree to the <a class="text-link" href="#">Terms &amp; Conditions</a></span>
+            </label>
+
+            <button type="submit" class="primary-btn full" disabled>Create Account</button>
           </div>
-
-          <label class="checkbox">
-            <input type="checkbox" name="terms" required>
-            <span>I agree to the <a class="text-link" href="#">Terms &amp; Conditions</a></span>
-          </label>
-
-          <button type="submit" class="primary-btn full">Create Account</button>
         </form>
 
         <div class="form-footer">
@@ -97,21 +119,11 @@
           <a class="text-link" href="login.html">Login</a>
         </div>
       </div>
-
-      <aside class="auth-aside">
-        <div class="aside-card">
-          <p class="eyebrow">Why LocalShop?</p>
-          <h3>Shop smarter with AI, local stock visibility, and trusted delivery.</h3>
-          <ul class="highlight-list">
-            <li><i class="bi bi-check-circle"></i> Negotiate prices automatically</li>
-            <li><i class="bi bi-check-circle"></i> Track parcels in real-time</li>
-            <li><i class="bi bi-check-circle"></i> Priority support for members</li>
-          </ul>
-        </div>
-      </aside>
-    </div>
   </main>
 
+  <div data-include="../includes/footer.html"></div>
+
+  <script src="../static/js/includes.js"></script>
   <script>
     (function () {
       const timeEl = document.getElementById("clock-time");
@@ -136,6 +148,51 @@
 
       updateClock();
       setInterval(updateClock, 1000);
+    })();
+
+    (function () {
+      const form = document.getElementById("register-form");
+      if (!form) return;
+
+      const roleSelect = document.getElementById("role");
+      const formFields = document.getElementById("form-fields");
+      const password = document.getElementById("password");
+      const confirmPassword = document.getElementById("confirm-password");
+
+      function toggleFields() {
+        const active = Boolean(roleSelect.value);
+        formFields.classList.toggle("show", active);
+        formFields.querySelectorAll("input, textarea, button").forEach((el) => {
+          if (el.type === "hidden") return;
+          el.disabled = !active;
+        });
+        roleSelect.setCustomValidity(active ? "" : "Please select a role.");
+      }
+
+      function checkPasswords() {
+        if (!password.value || !confirmPassword.value) {
+          confirmPassword.setCustomValidity("");
+          return;
+        }
+        confirmPassword.setCustomValidity(
+          password.value === confirmPassword.value ? "" : "Passwords do not match."
+        );
+      }
+
+      roleSelect.addEventListener("change", toggleFields);
+      password.addEventListener("input", checkPasswords);
+      confirmPassword.addEventListener("input", checkPasswords);
+
+      form.addEventListener("submit", (event) => {
+        toggleFields();
+        checkPasswords();
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          form.reportValidity();
+        }
+      });
+
+      toggleFields();
     })();
   </script>
 </body>

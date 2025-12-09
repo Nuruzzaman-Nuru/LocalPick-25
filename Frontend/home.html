@@ -3,22 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LocalShop | Shop Smarter, Save Better</title>
+  <title>LocalPick | Shop Smarter, Save Better</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="static/css/styles.css">
+  <link rel="stylesheet" href="static/css/home-extras.css">
 </head>
 <body>
   <header class="nav-shell">
     <div class="container nav-bar">
       <div class="brand">
         <i class="bi bi-bag-check-fill"></i>
-        <span class="brand-name">LocalShop</span>
+        <span class="brand-name">LocalPick</span>
       </div>
       <nav class="nav-links">
         <a href="#">Home</a>
         <a href="#products">Shop Now</a>
-        <a href="#about">About LocalShop</a>
+        <a href="#about">About LocalPick</a>
         <a href="#contact">Contact</a>
       </nav>
       <div class="nav-actions">
@@ -33,16 +34,63 @@
   </header>
 
   <div class="sale-banner">
-    <p>Welcome to LocalShop! Up to 40% OFF on selected items! Limited Time Offer</p>
+    <p>Welcome to LocalPick! Up to 40% OFF on selected items! Limited Time Offer</p>
   </div>
 
   <main>
+    <section class="news-ticker-container">
+      <div class="news-ticker">
+        <div class="ticker-content">
+          <span>Hot Deal: Get 20% off on Electronics</span>
+          <span> New Arrivals: Latest Fashion Collection</span>
+          <span>Free Delivery on orders over ৳1000</span>
+          <span> Mobile Accessories starting from ৳299</span>
+          <span> Limited Time: Buy 1 Get 1 Free on selected items</span>
+        </div>
+      </div>
+    </section>
+
     <section class="hero">
-      <div class="container hero-content">
-        <h1>Discover Amazing Deals</h1>
-        <p class="hero-sub">Shop Smarter, Save Better</p>
-        <p class="hero-lede">Experience the future of shopping with AI powered price negotiations and real-time local inventory.</p>
-        <button class="primary-btn large">Shop Now <i class="bi bi-arrow-right"></i></button>
+      <div class="container">
+        <div class="slider" id="shop-slider">
+          <div class="slides">
+            <article class="slide active">
+              <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&q=80" alt="Electronics Store">
+              <div class="caption">
+                <h3>Electronics Store</h3>
+                <p>Find the latest gadgets and electronics.</p>
+              </div>
+            </article>
+            <article class="slide">
+              <img src="https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=1600&q=80" alt="Fashion Boutique">
+              <div class="caption">
+                <h3>Fashion Boutique</h3>
+                <p>Trendy clothes and accessories.</p>
+              </div>
+            </article>
+            <article class="slide">
+              <img src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=1600&q=80" alt="Home Decor">
+              <div class="caption">
+                <h3>Home Decor</h3>
+                <p>Beautiful items for your home.</p>
+              </div>
+            </article>
+            <article class="slide">
+              <img src="https://images.unsplash.com/photo-1516594798947-e65505dbb29d?auto=format&fit=crop&w=1600&q=80" alt="Book Store">
+              <div class="caption">
+                <h3>Book Store</h3>
+                <p>Explore our collection of books.</p>
+              </div>
+            </article>
+          </div>
+          <button class="slider-control prev" aria-label="Previous slide">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+          <button class="slider-control next" aria-label="Next slide">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+          <div class="slider-dots" aria-label="Slide indicators"></div>
+        </div>
       </div>
     </section>
 
@@ -76,7 +124,7 @@
     <section class="features" id="about">
       <div class="container">
         <div class="section-head">
-          <h2>Why Choose LocalShop?</h2>
+          <h2>Why Choose LocalPick?</h2>
         </div>
         <div class="feature-grid">
           <div class="feature-card">
@@ -107,7 +155,7 @@
       <div class="container cta-box">
         <div>
           <h2>Ready to Start Shopping?</h2>
-          <p>Join thousands of happy customers saving time and money with LocalShop.</p>
+          <p>Join thousands of happy customers saving time and money with LocalPick.</p>
         </div>
         <button class="primary-btn large">Create Account</button>
       </div>
@@ -118,101 +166,72 @@
         <div class="section-head">
           <h2>Featured Products</h2>
         </div>
-        <div class="product-grid">
-          <article class="product-card">
-            <div class="badge in-stock">In Stock</div>
-            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80" alt="Smart Watch">
-            <h3>Smart Watch Pro</h3>
-            <p>Experience premium quality and style.</p>
-            <div class="price-row">
-              <span class="price">$299.99</span>
-              <button class="ghost-btn">Add to Cart</button>
+        <div class="product-slider" id="product-slider">
+          <button class="prod-control prev" aria-label="Previous products"><i class="bi bi-chevron-left"></i></button>
+          <div class="product-track">
+            <div class="product-slide">
+              <article class="product-card">
+                <div class="badge in-stock">In Stock</div>
+                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80" alt="Smart Watch">
+                <h3>Smart Watch Pro</h3>
+                <p>Experience premium quality and style.</p>
+                <div class="price-row">
+                  <span class="price">$299.99</span>
+                  <button class="ghost-btn">Add to Cart</button>
+                </div>
+              </article>
             </div>
-          </article>
 
-          <article class="product-card">
-            <div class="badge in-stock">In Stock</div>
-            <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=600&q=80" alt="Wireless Earbuds">
-            <h3>Wireless Earbuds</h3>
-            <p>Premium sound with seamless pairing.</p>
-            <div class="price-row">
-              <span class="price">$149.99</span>
-              <button class="ghost-btn">Add to Cart</button>
+            <div class="product-slide">
+              <article class="product-card">
+                <div class="badge in-stock">In Stock</div>
+                <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=600&q=80" alt="Wireless Earbuds">
+                <h3>Wireless Earbuds</h3>
+                <p>Premium sound with seamless pairing.</p>
+                <div class="price-row">
+                  <span class="price">$149.99</span>
+                  <button class="ghost-btn">Add to Cart</button>
+                </div>
+              </article>
             </div>
-          </article>
 
-          <article class="product-card">
-            <div class="badge out">Out of Stock</div>
-            <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=600&q=80" alt="Backpack">
-            <h3>Premium Backpack</h3>
-            <p>Durable build with modern design.</p>
-            <div class="price-row">
-              <span class="price">$89.99</span>
-              <button class="ghost-btn" disabled>Out of Stock</button>
+            <div class="product-slide">
+              <article class="product-card">
+                <div class="badge out">Out of Stock</div>
+                <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=600&q=80" alt="Backpack">
+                <h3>Premium Backpack</h3>
+                <p>Durable build with modern design.</p>
+                <div class="price-row">
+                  <span class="price">$89.99</span>
+                  <button class="ghost-btn" disabled>Out of Stock</button>
+                </div>
+              </article>
             </div>
-          </article>
 
-          <article class="product-card">
-            <div class="badge in-stock">In Stock</div>
-            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80" alt="Designer Sunglasses">
-            <h3>Designer Sunglasses</h3>
-            <p>Timeless frames with UV protection.</p>
-            <div class="price-row">
-              <span class="price">$199.99</span>
-              <button class="ghost-btn">Add to Cart</button>
+            <div class="product-slide">
+              <article class="product-card">
+                <div class="badge in-stock">In Stock</div>
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80" alt="Designer Sunglasses">
+                <h3>Designer Sunglasses</h3>
+                <p>Timeless frames with UV protection.</p>
+                <div class="price-row">
+                  <span class="price">$199.99</span>
+                  <button class="ghost-btn">Add to Cart</button>
+                </div>
+              </article>
             </div>
-          </article>
+          </div>
+          <button class="prod-control next" aria-label="Next products"><i class="bi bi-chevron-right"></i></button>
+          <div class="product-dots" aria-label="Product slide indicators"></div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer" id="contact">
-    <div class="container footer-grid">
-      <div>
-        <h4>Get in Touch</h4>
-        <p><i class="bi bi-whatsapp"></i> 01729885287</p>
-        <p><i class="bi bi-telephone"></i> 01307347646</p>
-        <div class="social">
-          <i class="bi bi-facebook"></i>
-          <i class="bi bi-instagram"></i>
-          <i class="bi bi-twitter"></i>
-        </div>
-      </div>
+  <div data-include="includes/footer.html" id="contact"></div>
 
-      <div>
-        <h4>Popular Categories</h4>
-        <ul>
-          <li>Staples</li>
-          <li>Beverages</li>
-          <li>Personal Care</li>
-          <li>Home Care</li>
-          <li>Baby Care</li>
-        </ul>
-      </div>
-
-      <div>
-        <h4>Customer Service</h4>
-        <ul>
-          <li>About Us</li>
-          <li>Terms &amp; Conditions</li>
-          <li>FAQ</li>
-          <li>Privacy Policy</li>
-          <li>Cancellation &amp; Returns</li>
-        </ul>
-      </div>
-
-      <div>
-        <h4>Secure Payments</h4>
-        <p>We accept major credit cards, mobile wallets, and bank transfers.</p>
-      </div>
-    </div>
-    <div class="footer-base">
-      <p>Purbachal, American City Dhaka</p>
-      <p>© 2025 LocalShop. All rights reserved.</p>
-    </div>
-  </footer>
-
+  <script src="static/js/includes.js"></script>
+  <script src="static/js/home-extras.js"></script>
   <script>
     (function () {
       const timeEl = document.getElementById("clock-time");
