@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "routes": [
-    { "src": "/auth/(.*)", "dest": "/Frontend/auth/$1" },
-    { "src": "/", "dest": "/Frontend/home.html" },
-    { "src": "/(.*)", "dest": "/Frontend/$1" }
+  "rewrites": [
+    { "source": "/auth/:path*", "destination": "/Frontend/auth/:path*" },
+    { "source": "/", "destination": "/Frontend/main/index.html" },
+    { "source": "/:path*", "destination": "/Frontend/:path*" }
   ]
 }
