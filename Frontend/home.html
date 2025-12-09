@@ -157,7 +157,7 @@
           <h2>Ready to Start Shopping?</h2>
           <p>Join thousands of happy customers saving time and money with LocalPick.</p>
         </div>
-        <button  class="primary-btn" href="auth/register.html">Create Account</button>
+        <a class="primary-btn" href="auth/register.html">Create Account</a>
       </div>
     </section>
 
@@ -226,9 +226,72 @@
         </div>
       </div>
     </section>
+
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="section-head">
+          <h2>Contact Us</h2>
+          <p class="section-sub">Get in touch with us for any questions or support</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="contact-icon email"><i class="bi bi-envelope-fill"></i></div>
+            <h4>Email</h4>
+            <a href="mailto:support@localpick.com">support@localpick.com</a>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon phone"><i class="bi bi-telephone-fill"></i></div>
+            <h4>Phone</h4>
+            <a href="tel:+8801307347646">+8801307347646</a>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon address"><i class="bi bi-geo-alt-fill"></i></div>
+            <h4>Address</h4>
+            <p>Level 4, S Purbachal, American City Dhaka, Bangladesh</p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon support"><i class="bi bi-clock-fill"></i></div>
+            <h4>Support</h4>
+            <p>24/7 (orders) <br> 9AM - 7PM (delivery service)</p>
+          </div>
+        </div>
+
+        <div class="contact-form-wrap">
+          <div class="contact-form-card">
+            <h3>Send us a message</h3>
+            <form id="contactForm">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required>
+
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" placeholder="How can we help?" required>
+
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="4" placeholder="Tell us more..." required></textarea>
+
+              <button type="submit" class="primary-btn full-width">Send Message</button>
+              <p id="contactStatus" class="contact-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+          <div class="contact-side-card">
+            <h4>We're here to help</h4>
+            <p>Questions about orders, deliveries, or partnering with LocalPick? Send us a message and the team will get back within one business day.</p>
+            <ul>
+              <li><i class="bi bi-check-circle-fill"></i> Fast response from the support team</li>
+              <li><i class="bi bi-check-circle-fill"></i> Clear updates on your requests</li>
+              <li><i class="bi bi-check-circle-fill"></i> Local experts to guide you</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <div data-include="includes/footer.html" id="contact"></div>
+  <div data-include="includes/footer.html" id="footer"></div>
 
   <script src="static/js/includes.js"></script>
   <script src="static/js/home-extras.js"></script>
@@ -256,6 +319,62 @@
 
       updateClock();
       setInterval(updateClock, 1000);
+    })();
+
+    (function () {
+      const form = document.getElementById("contactForm");
+      const statusEl = document.getElementById("contactStatus");
+
+      if (!form) return;
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (statusEl) {
+          statusEl.textContent = "Sending...";
+          statusEl.classList.remove("success", "error");
+        }
+
+        const payload = {
+          name: form.name.value.trim(),
+          email: form.email.value.trim(),
+          subject: form.subject.value.trim(),
+          message: form.message.value.trim()
+        };
+
+        try {
+          const res = await fetch("/contact", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+          });
+
+          const data = await res.json().catch(() => ({}));
+          const ok = res.ok && data.status === "success";
+
+          if (ok) {
+            form.reset();
+            if (statusEl) {
+              statusEl.textContent = data.message || "Message sent successfully.";
+              statusEl.classList.add("success");
+            } else {
+              alert(data.message || "Message sent successfully.");
+            }
+            return;
+          }
+
+          throw new Error(data.message || "Unable to send right now.");
+        } catch (err) {
+          if (statusEl) {
+            statusEl.textContent = err.message || "Something went wrong. Please try again later.";
+            statusEl.classList.add("error");
+          } else {
+            alert("Something went wrong. Please try again later.");
+          }
+        }
+      });
     })();
   </script>
 </body>
