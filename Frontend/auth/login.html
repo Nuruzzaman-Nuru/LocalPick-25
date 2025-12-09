@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | LocalShop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body class="auth-body">
+  <header class="nav-shell">
+    <div class="container nav-bar">
+      <div class="brand">
+        <i class="bi bi-bag-check-fill"></i>
+        <span class="brand-name">LocalShop</span>
+      </div>
+      <nav class="nav-links">
+        <a href="../home.html">Home</a>
+        <a href="../home.html#products">Shop Now</a>
+        <a href="../home.html#about">About LocalShop</a>
+        <a href="../home.html#contact">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="ghost-btn current" href="login.html">Login</a>
+        <a class="primary-btn" href="register.html">Register</a>
+        <div class="clock">
+          <span class="time" id="clock-time">--:--:--</span>
+          <span class="day" id="clock-day">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="auth-main">
+    <div class="container auth-grid">
+      <div class="auth-card">
+        <p class="eyebrow">Welcome back</p>
+        <h1>Login to LocalShop</h1>
+        <p class="auth-sub">Access your orders, saved shops, and exclusive deals.</p>
+
+        <form class="auth-form">
+          <label class="input-group">
+            <span>Email</span>
+            <div class="input-field">
+              <i class="bi bi-envelope"></i>
+              <input type="email" name="email" placeholder="you@example.com" required>
+            </div>
+          </label>
+
+          <label class="input-group">
+            <span>Password</span>
+            <div class="input-field">
+              <i class="bi bi-lock"></i>
+              <input type="password" name="password" placeholder="Enter your password" required>
+            </div>
+          </label>
+
+          <div class="form-row">
+            <label class="checkbox">
+              <input type="checkbox" name="remember" checked>
+              <span>Remember me</span>
+            </label>
+            <a class="text-link" href="#">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="primary-btn full">Continue</button>
+        </form>
+
+        <div class="form-footer">
+          <span>New to LocalShop?</span>
+          <a class="text-link" href="register.html">Create an account</a>
+        </div>
+      </div>
+
+      <aside class="auth-aside">
+        <div class="aside-card">
+          <p class="eyebrow">Save more locally</p>
+          <h3>Shop with AI negotiation and real-time inventory from nearby stores.</h3>
+          <ul class="highlight-list">
+            <li><i class="bi bi-check-circle"></i> Personalized deal alerts</li>
+            <li><i class="bi bi-check-circle"></i> Secure payments & buyer protection</li>
+            <li><i class="bi bi-check-circle"></i> Same-day delivery in select areas</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const timeEl = document.getElementById("clock-time");
+      const dayEl = document.getElementById("clock-day");
+
+      function pad(num) {
+        return num.toString().padStart(2, "0");
+      }
+
+      function updateClock() {
+        const now = new Date();
+        const hours = pad(now.getHours());
+        const minutes = pad(now.getMinutes());
+        const seconds = pad(now.getSeconds());
+        timeEl.textContent = `${hours}:${minutes}:${seconds}`;
+        dayEl.textContent = now.toLocaleDateString(undefined, {
+          weekday: "long",
+          month: "long",
+          day: "numeric"
+        });
+      }
+
+      updateClock();
+      setInterval(updateClock, 1000);
+    })();
+  </script>
+</body>
+</html>
