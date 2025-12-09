@@ -355,6 +355,42 @@
   line-height: 1.6;
 }
 
+.about-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.about-card::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border-radius: 16px;
+  background: radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.05), transparent 45%),
+    radial-gradient(circle at 80% 10%, rgba(58, 108, 246, 0.05), transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.about-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.about-grid.card-style {
+  gap: 16px;
+}
+
+.pill-card {
+  border-radius: 18px;
+  border: 1px solid #e7e9f2;
+  background: linear-gradient(180deg, #f7f8ff, #ffffff);
+  box-shadow: 0 12px 30px rgba(17, 27, 51, 0.08);
+}
+
+.about-icon.gradient {
+  background: linear-gradient(135deg, #5c7cfa, #a855f7);
+}
+
 .eyebrow {
   display: inline-block;
   font-size: 13px;
@@ -645,6 +681,10 @@
     grid-template-columns: 1fr;
   }
 
+  .about-grid.card-style {
+    grid-template-columns: 1fr;
+  }
+
   .contact-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -704,6 +744,14 @@
 
   .about-card {
     padding: 20px;
+  }
+
+  .about-grid.card-style {
+    grid-template-columns: 1fr;
+  }
+
+  .pill-card {
+    padding: 12px 10px;
   }
 
   .about-hero-text h3 {
