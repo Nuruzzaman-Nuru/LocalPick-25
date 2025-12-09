@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LocalShop | Shop Smarter, Save Better</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+  <header class="nav-shell">
+    <div class="container nav-bar">
+      <div class="brand">
+        <i class="bi bi-bag-check-fill"></i>
+        <span class="brand-name">LocalShop</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#">Home</a>
+        <a href="#products">Shop Now</a>
+        <a href="#about">About LocalShop</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="ghost-btn">Login</button>
+        <button class="primary-btn">Register</button>
+        <div class="clock">
+          <span class="time" id="clock-time">--:--:--</span>
+          <span class="day" id="clock-day">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="sale-banner">
+    <p>Welcome to LocalShop! Up to 40% OFF on selected items! Limited Time Offer</p>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-content">
+        <h1>Discover Amazing Deals</h1>
+        <p class="hero-sub">Shop Smarter, Save Better</p>
+        <p class="hero-lede">Experience the future of shopping with AI powered price negotiations and real-time local inventory.</p>
+        <button class="primary-btn large">Shop Now <i class="bi bi-arrow-right"></i></button>
+      </div>
+    </section>
+
+    <section class="search-wrap">
+      <div class="container search-card">
+        <div class="search-tabs">
+          <button class="tab active"><i class="bi bi-grid-1x2-fill"></i> All</button>
+          <button class="tab"><i class="bi bi-box-seam"></i> Products</button>
+          <button class="tab"><i class="bi bi-shop"></i> Shops</button>
+        </div>
+        <div class="search-row">
+          <input type="text" placeholder="Search for products, shops, or locations...">
+          <button class="primary-btn">Search</button>
+        </div>
+        <div class="search-options">
+          <label class="location">
+            <input type="checkbox" checked>
+            <span>Use my location</span>
+          </label>
+          <div class="tags">
+            <span>Popular:</span>
+            <button class="tag">Electronics</button>
+            <button class="tag">Fashion</button>
+            <button class="tag">Groceries</button>
+            <button class="tag">Local Shops</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="about">
+      <div class="container">
+        <div class="section-head">
+          <h2>Why Choose LocalShop?</h2>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="icon-circle"><i class="bi bi-geo-alt"></i></div>
+            <h3>Local Shop Discovery</h3>
+            <p>Find the best local shops near you with real-time inventory tracking.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon-circle"><i class="bi bi-stars"></i></div>
+            <h3>Smart Negotiation</h3>
+            <p>AI-powered price negotiation to unlock the best deals automatically.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon-circle"><i class="bi bi-truck"></i></div>
+            <h3>Fast Delivery</h3>
+            <p>Express delivery within 24 hours to your doorstep.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon-circle"><i class="bi bi-shield-check"></i></div>
+            <h3>Secure Shopping</h3>
+            <p>100% secure payments with buyer protection on every order.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container cta-box">
+        <div>
+          <h2>Ready to Start Shopping?</h2>
+          <p>Join thousands of happy customers saving time and money with LocalShop.</p>
+        </div>
+        <button class="primary-btn large">Create Account</button>
+      </div>
+    </section>
+
+    <section class="products" id="products">
+      <div class="container">
+        <div class="section-head">
+          <h2>Featured Products</h2>
+        </div>
+        <div class="product-grid">
+          <article class="product-card">
+            <div class="badge in-stock">In Stock</div>
+            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80" alt="Smart Watch">
+            <h3>Smart Watch Pro</h3>
+            <p>Experience premium quality and style.</p>
+            <div class="price-row">
+              <span class="price">$299.99</span>
+              <button class="ghost-btn">Add to Cart</button>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="badge in-stock">In Stock</div>
+            <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=600&q=80" alt="Wireless Earbuds">
+            <h3>Wireless Earbuds</h3>
+            <p>Premium sound with seamless pairing.</p>
+            <div class="price-row">
+              <span class="price">$149.99</span>
+              <button class="ghost-btn">Add to Cart</button>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="badge out">Out of Stock</div>
+            <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=600&q=80" alt="Backpack">
+            <h3>Premium Backpack</h3>
+            <p>Durable build with modern design.</p>
+            <div class="price-row">
+              <span class="price">$89.99</span>
+              <button class="ghost-btn" disabled>Out of Stock</button>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="badge in-stock">In Stock</div>
+            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80" alt="Designer Sunglasses">
+            <h3>Designer Sunglasses</h3>
+            <p>Timeless frames with UV protection.</p>
+            <div class="price-row">
+              <span class="price">$199.99</span>
+              <button class="ghost-btn">Add to Cart</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contact">
+    <div class="container footer-grid">
+      <div>
+        <h4>Get in Touch</h4>
+        <p><i class="bi bi-whatsapp"></i> 01729885287</p>
+        <p><i class="bi bi-telephone"></i> 01307347646</p>
+        <div class="social">
+          <i class="bi bi-facebook"></i>
+          <i class="bi bi-instagram"></i>
+          <i class="bi bi-twitter"></i>
+        </div>
+      </div>
+
+      <div>
+        <h4>Popular Categories</h4>
+        <ul>
+          <li>Staples</li>
+          <li>Beverages</li>
+          <li>Personal Care</li>
+          <li>Home Care</li>
+          <li>Baby Care</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Customer Service</h4>
+        <ul>
+          <li>About Us</li>
+          <li>Terms &amp; Conditions</li>
+          <li>FAQ</li>
+          <li>Privacy Policy</li>
+          <li>Cancellation &amp; Returns</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Secure Payments</h4>
+        <p>We accept major credit cards, mobile wallets, and bank transfers.</p>
+      </div>
+    </div>
+    <div class="footer-base">
+      <p>Purbachal, American City Dhaka</p>
+      <p>© 2025 LocalShop. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const timeEl = document.getElementById("clock-time");
+      const dayEl = document.getElementById("clock-day");
+
+      function pad(num) {
+        return num.toString().padStart(2, "0");
+      }
+
+      function updateClock() {
+        const now = new Date();
+        const hours = pad(now.getHours());
+        const minutes = pad(now.getMinutes());
+        const seconds = pad(now.getSeconds());
+        timeEl.textContent = `${hours}:${minutes}:${seconds}`;
+        dayEl.textContent = now.toLocaleDateString(undefined, {
+          weekday: "long",
+          month: "long",
+          day: "numeric"
+        });
+      }
+
+      updateClock();
+      setInterval(updateClock, 1000);
+    })();
+  </script>
+</body>
+</html>

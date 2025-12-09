@@ -1,0 +1,3 @@
+LocalPick
+
+Initial repository setup.
