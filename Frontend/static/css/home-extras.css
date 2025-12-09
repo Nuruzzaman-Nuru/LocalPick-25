@@ -226,6 +226,208 @@
   box-shadow: none;
 }
 
+.about {
+  padding: 80px 0 70px;
+  background: #f7f8ff;
+}
+
+.about-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 18px 44px rgba(17, 27, 51, 0.08);
+}
+
+.about-head h2 {
+  margin: 6px 0 10px;
+}
+
+.about-head p {
+  margin: 0;
+  color: #4c5464;
+  line-height: 1.6;
+}
+
+.about-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 22px;
+  align-items: center;
+  margin: 20px 0 10px;
+}
+
+.about-hero-text h3 {
+  margin: 10px 0 8px;
+}
+
+.about-hero-text p {
+  color: #4c5464;
+  line-height: 1.6;
+  margin: 0 0 10px;
+}
+
+.about-hero-text ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+  color: #1c2430;
+}
+
+.about-hero-text li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.about-hero-text i {
+  color: #16a34a;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(124, 58, 237, 0.1);
+  color: #5824c1;
+  font-weight: 700;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.about-photos {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  justify-items: end;
+}
+
+.photo {
+  border-radius: 14px;
+  box-shadow: 0 14px 30px rgba(17, 27, 51, 0.18);
+  object-fit: cover;
+  width: 100%;
+  display: block;
+}
+
+.main-photo {
+  max-width: 340px;
+  height: 240px;
+}
+
+.photo-stack {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  max-width: 240px;
+}
+
+.small-photo {
+  height: 120px;
+}
+
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 14px 0 18px;
+}
+
+.mission-card {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(58, 108, 246, 0.08));
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+  color: #1c2430;
+  box-shadow: 0 10px 24px rgba(17, 27, 51, 0.08);
+}
+
+.mission-card h4 {
+  margin: 0 0 6px;
+}
+
+.mission-card p {
+  margin: 0;
+  color: #4c5464;
+  line-height: 1.6;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #7c3aed;
+  background: rgba(124, 58, 237, 0.08);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 24px 0 22px;
+}
+
+.about-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 12px;
+  border: 1px solid #eef0f6;
+  border-radius: 12px;
+  background: #fbfbff;
+}
+
+.about-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #3a6cf6, #8b2be2);
+  color: #ffffff;
+  font-size: 18px;
+}
+
+.about-item h4 {
+  margin: 0 0 4px;
+}
+
+.about-item p {
+  margin: 0;
+  color: #4c5464;
+  line-height: 1.5;
+}
+
+.about-split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin: 10px 0 18px;
+}
+
+.about-split h3 {
+  margin: 0 0 6px;
+}
+
+.about-split p {
+  margin: 0;
+  color: #4c5464;
+  line-height: 1.6;
+}
+
+.about-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
 .contact {
   padding: 80px 0 70px;
   background: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.06), transparent 20%), #f7f8ff;
@@ -306,10 +508,10 @@
 }
 
 .contact-form-wrap {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 22px;
-  align-items: stretch;
+  align-items: center;
 }
 
 .contact-form-card,
@@ -319,6 +521,16 @@
   border-radius: 16px;
   padding: 22px;
   box-shadow: 0 18px 38px rgba(17, 27, 51, 0.08);
+}
+
+.contact-form-card {
+  width: 100%;
+  max-width: 860px;
+}
+
+.contact-side-card {
+  width: 100%;
+  max-width: 720px;
 }
 
 .contact-form-card h3 {
@@ -417,13 +629,26 @@
     right: 2px;
   }
 
+  .about-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .about-photos {
+    justify-items: start;
+  }
+
+  .main-photo {
+    max-width: 100%;
+  }
+
+  .mission-grid {
+    grid-template-columns: 1fr;
+  }
+
   .contact-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .contact-form-wrap {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 900px) {
@@ -473,6 +698,39 @@
 }
 
 @media (max-width: 640px) {
+  .about {
+    padding: 64px 0 54px;
+  }
+
+  .about-card {
+    padding: 20px;
+  }
+
+  .about-hero-text h3 {
+    font-size: 22px;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-split {
+    grid-template-columns: 1fr;
+  }
+
+  .about-photos {
+    gap: 10px;
+  }
+
+  .main-photo {
+    height: 220px;
+  }
+
+  .photo-stack {
+    max-width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .contact {
     padding: 60px 0 50px;
   }

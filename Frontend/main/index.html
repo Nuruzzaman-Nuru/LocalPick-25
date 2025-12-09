@@ -6,32 +6,11 @@
   <title>LocalPick | Shop Smarter, Save Better</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="static/css/styles.css">
-  <link rel="stylesheet" href="static/css/home-extras.css">
+  <link rel="stylesheet" href="../static/css/styles.css">
+  <link rel="stylesheet" href="../static/css/home-extras.css">
 </head>
 <body>
-  <header class="nav-shell">
-    <div class="container nav-bar">
-      <div class="brand">
-        <i class="bi bi-bag-check-fill"></i>
-        <span class="brand-name">LocalPick</span>
-      </div>
-      <nav class="nav-links">
-        <a href="#">Home</a>
-        <a href="#products">Shop Now</a>
-        <a href="#about">About LocalPick</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <div class="nav-actions">
-        <a class="ghost-btn" href="auth/login.html">Login</a>
-        <a class="primary-btn" href="auth/register.html">Register</a>
-        <div class="clock">
-          <span class="time" id="clock-time">--:--:--</span>
-          <span class="day" id="clock-day">Loading...</span>
-        </div>
-      </div>
-    </div>
-  </header>
+  <div data-include="../includes/header.html"></div>
 
   <div class="sale-banner">
     <p>Welcome to LocalPick! Up to 40% OFF on selected items! Limited Time Offer</p>
@@ -121,31 +100,50 @@
       </div>
     </section>
 
-    <section class="features" id="about">
+    <section class="about" id="about">
       <div class="container">
-        <div class="section-head">
-          <h2>Why Choose LocalPick?</h2>
-        </div>
-        <div class="feature-grid">
-          <div class="feature-card">
-            <div class="icon-circle"><i class="bi bi-geo-alt"></i></div>
-            <h3>Local Shop Discovery</h3>
-            <p>Find the best local shops near you with real-time inventory tracking.</p>
+        <div class="about-card">
+          <div class="about-head">
+            <span class="eyebrow">About LocalPick</span>
+            <h2>We connect you with trusted local shops</h2>
+            <p>LocalPick aims to revolutionize the local shopping experience by connecting customers with nearby shops through our platform. We empower local businesses while giving you quick, convenient access to the products you need.</p>
           </div>
-          <div class="feature-card">
-            <div class="icon-circle"><i class="bi bi-stars"></i></div>
-            <h3>Smart Negotiation</h3>
-            <p>AI-powered price negotiation to unlock the best deals automatically.</p>
+
+          <div class="about-grid">
+            <div class="about-item">
+              <div class="about-icon"><i class="bi bi-shop"></i></div>
+              <div>
+                <h4>Local Shop Discovery</h4>
+                <p>Find and support nearby businesses with real-time visibility.</p>
+              </div>
+            </div>
+            <div class="about-item">
+              <div class="about-icon"><i class="bi bi-truck"></i></div>
+              <div>
+                <h4>Fast Delivery</h4>
+                <p>Quick, reliable delivery to your doorstep.</p>
+              </div>
+            </div>
+            <div class="about-item">
+              <div class="about-icon"><i class="bi bi-chat-dots"></i></div>
+              <div>
+                <h4>Smart Negotiations</h4>
+                <p>AI-powered price negotiation for better deals.</p>
+              </div>
+            </div>
+            <div class="about-item">
+              <div class="about-icon"><i class="bi bi-graph-up"></i></div>
+              <div>
+                <h4>Shop Management</h4>
+                <p>Powerful tools that help shop owners grow.</p>
+              </div>
+            </div>
           </div>
-          <div class="feature-card">
-            <div class="icon-circle"><i class="bi bi-truck"></i></div>
-            <h3>Fast Delivery</h3>
-            <p>Express delivery within 24 hours to your doorstep.</p>
-          </div>
-          <div class="feature-card">
-            <div class="icon-circle"><i class="bi bi-shield-check"></i></div>
-            <h3>Secure Shopping</h3>
-            <p>100% secure payments with buyer protection on every order.</p>
+
+         
+
+          <div class="about-cta">
+            <a class="primary-btn" href="../auth/register.html">Join LocalPick Today</a>
           </div>
         </div>
       </div>
@@ -277,34 +275,26 @@
               <p id="contactStatus" class="contact-status" role="status" aria-live="polite"></p>
             </form>
           </div>
-          <div class="contact-side-card">
-            <h4>We're here to help</h4>
-            <p>Questions about orders, deliveries, or partnering with LocalPick? Send us a message and the team will get back within one business day.</p>
-            <ul>
-              <li><i class="bi bi-check-circle-fill"></i> Fast response from the support team</li>
-              <li><i class="bi bi-check-circle-fill"></i> Clear updates on your requests</li>
-              <li><i class="bi bi-check-circle-fill"></i> Local experts to guide you</li>
-            </ul>
-          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <div data-include="includes/footer.html" id="footer"></div>
+  <div data-include="../includes/footer.html" id="footer"></div>
 
-  <script src="static/js/includes.js"></script>
-  <script src="static/js/home-extras.js"></script>
+  <script src="../static/js/includes.js"></script>
+  <script src="../static/js/home-extras.js"></script>
   <script>
     (function () {
-      const timeEl = document.getElementById("clock-time");
-      const dayEl = document.getElementById("clock-day");
-
       function pad(num) {
         return num.toString().padStart(2, "0");
       }
 
       function updateClock() {
+        const timeEl = document.getElementById("clock-time");
+        const dayEl = document.getElementById("clock-day");
+        if (!timeEl || !dayEl) return;
+
         const now = new Date();
         const hours = pad(now.getHours());
         const minutes = pad(now.getMinutes());
