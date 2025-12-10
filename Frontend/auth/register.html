@@ -209,9 +209,10 @@
             throw new Error(data.message || "Registration failed. Try again.");
           }
 
-          statusEl.textContent = `Registration successful! Your User ID is ${
-            data.user?.userId || "N/A"
-          }. Save it for login.`;
+          const registeredId = data.user?.userId || data.credentials?.userId || "N/A";
+          const registeredPassword = data.credentials?.password || payload.password || "your password";
+
+          statusEl.textContent = `Registration successful! Your User ID is ${registeredId} and your password is ${registeredPassword}. Please save both to log in.`;
           statusEl.classList.add("success");
           form.reset();
           confirmPassword.setCustomValidity("");

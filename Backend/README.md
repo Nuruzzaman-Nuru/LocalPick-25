@@ -18,13 +18,14 @@
 The API defaults to `http://localhost:5000`.
 
 ## Endpoints
-- `GET /api/health` — quick status check.
-- `POST /api/auth/register` — body: `{ name, phone, email, password, role, address }`  
+- `GET /api/health` - quick status check.
+- `POST /api/auth/register` - body: `{ name, phone, email, password, role, address }`  
   - Generates a unique `userId` (e.g., `LP-123456`) that can be used to log in.
-- `POST /api/auth/login` — body: `{ identifier, password }`, where `identifier` is the `userId` or email.  
+  - Returns `credentials` containing the `userId` and the submitted password so the UI can show them immediately after signup.
+- `POST /api/auth/login` - body: `{ identifier, password }`, where `identifier` is the `userId` or email.  
   - Returns a JWT plus public user info.
 
-Passwords are hashed with bcrypt and never returned. The `userId` is included in responses so it can be shown to the user after registration.
+Passwords are hashed with bcrypt in storage; the original password is only echoed back in the registration response for display.
 
 ## Create an admin user (MongoDB)
 1) Set admin env vars in `.env`:
