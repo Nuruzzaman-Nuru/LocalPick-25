@@ -784,6 +784,14 @@ a {
   display: block;
 }
 
+.form-status.success {
+  color: #2bbf6a;
+}
+
+.form-status.error {
+  color: #d64545;
+}
+
 .form-fields {
   display: none;
   gap: 12px;

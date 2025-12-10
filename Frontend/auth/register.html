@@ -111,6 +111,7 @@
             </label>
 
             <button type="submit" class="primary-btn full solid">Register</button>
+            <div class="form-status" id="register-status" aria-live="polite"></div>
           </div>
         </form>
 
@@ -119,6 +120,7 @@
           <a class="text-link" href="login.html">Login</a>
         </div>
       </div>
+    </div>
   </main>
 
   <div data-include="../includes/footer.html"></div>
@@ -156,6 +158,9 @@
 
       const password = document.getElementById("password");
       const confirmPassword = document.getElementById("confirm-password");
+      const statusEl = document.getElementById("register-status");
+      const submitBtn = form.querySelector("button[type='submit']");
+      const API_BASE = "http://localhost:5000/api";
 
       function checkPasswords() {
         if (!password.value || !confirmPassword.value) {
@@ -170,11 +175,51 @@
       password.addEventListener("input", checkPasswords);
       confirmPassword.addEventListener("input", checkPasswords);
 
-      form.addEventListener("submit", (event) => {
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
         checkPasswords();
         if (!form.checkValidity()) {
-          event.preventDefault();
           form.reportValidity();
+          return;
+        }
+
+        statusEl.textContent = "Creating your account...";
+        statusEl.classList.remove("error", "success");
+        statusEl.classList.add("show");
+        submitBtn.disabled = true;
+
+        const payload = {
+          role: form.role.value,
+          name: form.name.value,
+          phone: form.phone.value,
+          email: form.email.value,
+          password: form.password.value,
+          address: form.address.value,
+        };
+
+        try {
+          const response = await fetch(`${API_BASE}/auth/register`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            throw new Error(data.message || "Registration failed. Try again.");
+          }
+
+          statusEl.textContent = `Registration successful! Your User ID is ${
+            data.user?.userId || "N/A"
+          }. Save it for login.`;
+          statusEl.classList.add("success");
+          form.reset();
+          confirmPassword.setCustomValidity("");
+        } catch (error) {
+          statusEl.textContent = error.message || "Could not register right now.";
+          statusEl.classList.add("error");
+        } finally {
+          submitBtn.disabled = false;
         }
       });
 
