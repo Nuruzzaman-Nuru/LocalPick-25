@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details | LocalPick Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="../static/css/styles.css">
+  <link rel="stylesheet" href="../static/css/shop.css">
+</head>
+<body class="auth-body">
+  <div data-include="../includes/header.html"></div>
+  <main class="shop-shell">
+    <div class="container shop-grid">
+      <div class="card">
+        <div class="toolbar">
+          <div>
+            <h2 id="product-name">Product</h2>
+            <p class="helper-text" id="product-sku"></p>
+          </div>
+          <div class="action-row">
+            <a class="ghost-btn" id="edit-link"><i class="bi bi-pencil"></i> Edit</a>
+            <a class="ghost-btn" href="manage.html"><i class="bi bi-arrow-left"></i> Back</a>
+          </div>
+        </div>
+        <div class="page-status"></div>
+        <div id="product-body" class="grid-2"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../static/js/includes.js"></script>
+  <script src="../static/js/shop-api.js"></script>
+  <script>
+    (function () {
+      const id = qs("id");
+      const body = document.getElementById("product-body");
+      const nameEl = document.getElementById("product-name");
+      const skuEl = document.getElementById("product-sku");
+      const editLink = document.getElementById("edit-link");
+      if (!id) {
+        body.innerHTML = "<p>Missing product id.</p>";
+        return;
+      }
+      editLink.href = `edit_product.html?id=${id}`;
+
+      apiFetch(`/products/${id}`)
+        .then((p) => {
+          nameEl.textContent = p.name;
+          skuEl.textContent = p.sku || "";
+          const tags = (p.tags || []).join(", ");
+          const images = (p.images || []).map((url) => `<img class="thumb" src="${url}" alt="">`).join(" ");
+          body.innerHTML = `
+            <div class="card">
+              <h3>Details</h3>
+              <p>Category: ${p.category || "-"}</p>
+              <p>Price: ৳ ${p.price}${p.salePrice ? ` (Sale: ৳ ${p.salePrice})` : ""}</p>
+              <p>Stock: ${p.stock}</p>
+              <p>Unit: ${p.unit}</p>
+              <p>Status: <span class="status-pill ${p.status}">${p.status}</span></p>
+              <p>Tags: ${tags || "-"}</p>
+            </div>
+            <div class="card">
+              <h3>Description</h3>
+              <p>${p.description || "No description"}</p>
+              <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">${images || "No images"}</div>
+            </div>
+          `;
+        })
+        .catch((err) => {
+          document.querySelector(".page-status").textContent = err.message;
+          document.querySelector(".page-status").classList.add("show", "error");
+        });
+    })();
+  </script>
+</body>
+</html>

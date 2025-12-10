@@ -7,6 +7,9 @@ const morgan = require("morgan");
 
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
+const productRoutes = require("./routes/productRoutes");
+const orderRoutes = require("./routes/orderRoutes");
+const shopRoutes = require("./routes/shopRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -33,6 +36,9 @@ app.get("/api/health", (_req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/shops", shopRoutes);
 
 // Global error handler to avoid duplicate responses
 app.use((err, _req, res, _next) => {

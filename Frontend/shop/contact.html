@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Shop | LocalPick</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="../static/css/styles.css">
+  <link rel="stylesheet" href="../static/css/shop.css">
+</head>
+<body class="auth-body">
+  <div data-include="../includes/header.html"></div>
+  <main class="shop-shell">
+    <div class="container shop-grid">
+      <div class="card">
+        <div class="toolbar">
+          <div>
+            <h2>Contact Details</h2>
+            <p class="helper-text">How customers reach your shop.</p>
+          </div>
+          <a class="ghost-btn" href="settings.html"><i class="bi bi-gear"></i> Edit</a>
+        </div>
+        <div class="page-status"></div>
+        <div id="contact-body" class="grid-2"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../static/js/includes.js"></script>
+  <script src="../static/js/shop-api.js"></script>
+  <script>
+    (function () {
+      const shopId = getShopId();
+      const body = document.getElementById("contact-body");
+      if (!shopId) {
+        body.innerHTML = "<p>Please create your shop in settings first.</p>";
+        return;
+      }
+      apiFetch(`/shops/${shopId}`)
+        .then((s) => {
+          body.innerHTML = `
+            <div class="card">
+              <h3>Primary Contacts</h3>
+              <p>Phone: ${s.phone || "-"}</p>
+              <p>WhatsApp: ${s.whatsapp || "-"}</p>
+              <p>Email: ${s.email || "-"}</p>
+            </div>
+            <div class="card">
+              <h3>Links</h3>
+              <p>Facebook: ${s.socialLinks?.facebook || "-"}</p>
+              <p>Instagram: ${s.socialLinks?.instagram || "-"}</p>
+              <p>Map: ${s.mapLink ? `<a class="text-link" href="${s.mapLink}" target="_blank">Open Map</a>` : "-"}</p>
+            </div>
+          `;
+        })
+        .catch((err) => renderStatus(err.message, "error"));
+    })();
+  </script>
+</body>
+</html>

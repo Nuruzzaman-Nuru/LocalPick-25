@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products | LocalPick Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="../static/css/styles.css">
+  <link rel="stylesheet" href="../static/css/shop.css">
+</head>
+<body class="auth-body">
+  <div data-include="../includes/header.html"></div>
+  <main class="shop-shell">
+    <div class="container shop-grid">
+      <div class="card">
+        <div class="toolbar">
+          <div>
+            <h2>Products</h2>
+            <p class="helper-text">Manage your catalog</p>
+          </div>
+          <a class="primary-btn" href="add_product.html"><i class="bi bi-plus"></i> Add Product</a>
+        </div>
+        <div class="toolbar">
+          <input type="search" id="search" placeholder="Search by name/SKU">
+          <select id="category-filter">
+            <option value="">All categories</option>
+          </select>
+          <select id="status-filter">
+            <option value="">All status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+          <button class="ghost-btn" id="apply-filters"><i class="bi bi-filter"></i> Apply</button>
+        </div>
+        <div class="page-status"></div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="product-rows">
+              <tr><td colspan="7">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../static/js/includes.js"></script>
+  <script src="../static/js/shop-api.js"></script>
+  <script>
+    (function () {
+      const shopId = getShopId();
+      const rowsEl = document.getElementById("product-rows");
+      const categoryFilter = document.getElementById("category-filter");
+      const statusFilter = document.getElementById("status-filter");
+      const searchInput = document.getElementById("search");
+      if (!shopId) {
+        renderStatus("No shop found. Create your shop in Settings first.", "error");
+        rowsEl.innerHTML = "<tr><td colspan='7'>Create a shop first.</td></tr>";
+        return;
+      }
+
+      async function loadProducts() {
+        try {
+          const params = new URLSearchParams();
+          params.set("shopId", shopId);
+          if (statusFilter.value) params.set("status", statusFilter.value);
+          if (categoryFilter.value) params.set("category", categoryFilter.value);
+          if (searchInput.value) params.set("q", searchInput.value);
+          const data = await apiFetch(`/products?${params.toString()}`);
+          const items = data.items || [];
+          rowsEl.innerHTML = items
+            .map(
+              (p) => `<tr>
+                <td>${p.images?.length ? `<img class="thumb" src="${p.images[0]}" alt="${p.name}">` : "-"}</td>
+                <td><a href="product_details.html?id=${p._id}">${p.name}</a><br><small>${p.sku || ""}</small></td>
+                <td>${p.category || "-"}</td>
+                <td>৳ ${p.salePrice ?? p.price}</td>
+                <td>${p.stock ?? 0}</td>
+                <td><span class="status-pill ${p.status}">${p.status}</span></td>
+                <td class="action-row">
+                  <a class="ghost-btn" href="edit_product.html?id=${p._id}"><i class="bi bi-pencil"></i></a>
+                  <button class="ghost-btn" data-toggle="${p._id}" data-status="${p.status === "active" ? "inactive" : "active"}">
+                    ${p.status === "active" ? "Deactivate" : "Activate"}
+                  </button>
+                  <button class="ghost-btn" data-delete="${p._id}" style="color:#c0392b;">Delete</button>
+                </td>
+              </tr>`
+            )
+            .join("") || "<tr><td colspan='7'>No products yet.</td></tr>";
+
+          // Populate category filter with unique categories
+          const cats = [...new Set(items.map((i) => i.category).filter(Boolean))];
+          categoryFilter.innerHTML = `<option value=''>All categories</option>${cats
+            .map((c) => `<option value="${c}">${c}</option>`)
+            .join("")}`;
+        } catch (err) {
+          renderStatus(err.message, "error");
+        }
+      }
+
+      rowsEl.addEventListener("click", async (e) => {
+        const toggleId = e.target.getAttribute("data-toggle");
+        const deleteId = e.target.getAttribute("data-delete");
+        if (toggleId) {
+          const status = e.target.getAttribute("data-status");
+          try {
+            await apiFetch(`/products/${toggleId}/status`, {
+              method: "PATCH",
+              body: JSON.stringify({ status }),
+            });
+            loadProducts();
+          } catch (err) {
+            renderStatus(err.message, "error");
+          }
+        }
+        if (deleteId) {
+          if (!confirm("Delete this product?")) return;
+          try {
+            await apiFetch(`/products/${deleteId}`, { method: "DELETE" });
+            loadProducts();
+          } catch (err) {
+            renderStatus(err.message, "error");
+          }
+        }
+      });
+
+      document.getElementById("apply-filters").addEventListener("click", loadProducts);
+      loadProducts();
+    })();
+  </script>
+</body>
+</html>

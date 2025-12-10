@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop Settings | LocalPick</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="../static/css/styles.css">
+  <link rel="stylesheet" href="../static/css/shop.css">
+</head>
+<body class="auth-body">
+  <div data-include="../includes/header.html"></div>
+  <main class="shop-shell">
+    <div class="container shop-grid">
+      <div class="card">
+        <div class="toolbar">
+          <div>
+            <h2>Shop Settings</h2>
+            <p class="helper-text">Configure your shop profile and contact info.</p>
+          </div>
+          <a class="ghost-btn" href="index.html"><i class="bi bi-arrow-left"></i> Dashboard</a>
+        </div>
+        <div class="page-status"></div>
+        <form id="shop-form" class="form-grid">
+          <div class="split">
+            <label>Shop Name<input name="name" required></label>
+            <label>Tagline<input name="tagline"></label>
+          </div>
+          <label>Description<textarea name="description" rows="3"></textarea></label>
+          <div class="split">
+            <label>Logo URL<input name="logo"></label>
+            <label>Banner URL<input name="banner"></label>
+          </div>
+          <label>Address<textarea name="address" rows="2"></textarea></label>
+          <label>Google Maps Link<input name="mapLink"></label>
+          <div class="split">
+            <label>Phone<input name="phone"></label>
+            <label>WhatsApp<input name="whatsapp"></label>
+          </div>
+          <label>Email<input name="email" type="email"></label>
+          <div class="split">
+            <label>Facebook<input name="facebook"></label>
+            <label>Instagram<input name="instagram"></label>
+          </div>
+          <div class="split">
+            <label>Min Order Amount<input name="minOrderAmount" type="number" step="0.01"></label>
+            <label>Opening Hours<input name="openingHours" placeholder="e.g. 9am - 9pm"></label>
+          </div>
+          <label>Delivery Areas<textarea name="deliveryAreas" rows="2" placeholder="List areas or radius"></textarea></label>
+          <button type="submit" class="primary-btn full solid" id="save-btn">Save Settings</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script src="../static/js/includes.js"></script>
+  <script src="../static/js/shop-api.js"></script>
+  <script>
+    (function () {
+      const form = document.getElementById("shop-form");
+      const saveBtn = document.getElementById("save-btn");
+      let shopId = getShopId();
+      const user = getUser();
+
+      async function loadShop() {
+        if (!shopId) return;
+        try {
+          const data = await apiFetch(`/shops/${shopId}`);
+          form.name.value = data.name || "";
+          form.tagline.value = data.tagline || "";
+          form.description.value = data.description || "";
+          form.logo.value = data.logo || "";
+          form.banner.value = data.banner || "";
+          form.address.value = data.address || "";
+          form.mapLink.value = data.mapLink || "";
+          form.phone.value = data.phone || "";
+          form.whatsapp.value = data.whatsapp || "";
+          form.email.value = data.email || "";
+          form.facebook.value = data.socialLinks?.facebook || "";
+          form.instagram.value = data.socialLinks?.instagram || "";
+          form.minOrderAmount.value = data.minOrderAmount ?? "";
+          form.deliveryAreas.value = data.deliveryAreas || "";
+          form.openingHours.value = data.openingHours || "";
+        } catch (err) {
+          renderStatus(err.message, "error");
+        }
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        saveBtn.disabled = true;
+        renderStatus("Saving...");
+        const payload = {
+          ownerId: user?.id,
+          name: form.name.value,
+          tagline: form.tagline.value,
+          description: form.description.value,
+          logo: form.logo.value,
+          banner: form.banner.value,
+          address: form.address.value,
+          mapLink: form.mapLink.value,
+          phone: form.phone.value,
+          whatsapp: form.whatsapp.value,
+          email: form.email.value,
+          socialLinks: {
+            facebook: form.facebook.value,
+            instagram: form.instagram.value,
+          },
+          minOrderAmount: form.minOrderAmount.value ? Number(form.minOrderAmount.value) : 0,
+          deliveryAreas: form.deliveryAreas.value,
+          openingHours: form.openingHours.value,
+        };
+        try {
+          let saved;
+          if (shopId) {
+            saved = await apiFetch(`/shops/${shopId}`, { method: "PUT", body: JSON.stringify(payload) });
+          } else {
+            saved = await apiFetch(`/shops`, { method: "POST", body: JSON.stringify(payload) });
+          }
+          setShopId(saved._id);
+          shopId = saved._id;
+          renderStatus("Settings saved", "success");
+        } catch (err) {
+          renderStatus(err.message, "error");
+        } finally {
+          saveBtn.disabled = false;
+        }
+      });
+
+      loadShop();
+    })();
+  </script>
+</body>
+</html>
