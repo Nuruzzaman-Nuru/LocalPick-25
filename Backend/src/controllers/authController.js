@@ -14,7 +14,7 @@ const toPublicUser = (user) => ({
   address: user.address,
 });
 
-exports.register = async (req, res, next) => {
+exports.register = async (req, res) => {
   try {
     const { name, phone, email, password, role = "user", address } = req.body;
 
@@ -62,11 +62,12 @@ exports.register = async (req, res, next) => {
       token,
     });
   } catch (err) {
-    return next(err);
+    console.error("Registration error:", err);
+    return res.status(500).json({ message: "Registration failed. Please try again." });
   }
 };
 
-exports.login = async (req, res, next) => {
+exports.login = async (req, res) => {
   try {
     const { identifier, password } = req.body;
 
@@ -99,6 +100,7 @@ exports.login = async (req, res, next) => {
       token,
     });
   } catch (err) {
-    return next(err);
+    console.error("Login error:", err);
+    return res.status(500).json({ message: "Login failed. Please try again." });
   }
 };

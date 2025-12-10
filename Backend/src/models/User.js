@@ -22,10 +22,9 @@ async function generateUserId() {
   return exists ? generateUserId() : candidate;
 }
 
-userSchema.pre("save", async function preSave(next) {
-  if (this.userId) return next();
+userSchema.pre("save", async function preSave() {
+  if (this.userId) return;
   this.userId = await generateUserId();
-  return next();
 });
 
 module.exports = mongoose.model("User", userSchema);

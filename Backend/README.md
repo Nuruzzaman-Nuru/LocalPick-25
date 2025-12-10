@@ -17,6 +17,8 @@
 
 The API defaults to `http://localhost:5000`.
 
+If `MONGODB_URI` is missing or a local MongoDB instance is unavailable, the server will automatically start an in-memory MongoDB (data resets on restart).
+
 ## Endpoints
 - `GET /api/health` - quick status check.
 - `POST /api/auth/register` - body: `{ name, phone, email, password, role, address }`  
