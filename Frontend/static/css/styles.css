@@ -28,6 +28,13 @@ a {
   text-decoration: none;
 }
 
+img,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -865,5 +872,104 @@ a {
 
   .form-row.gap {
     flex-direction: column;
+  }
+}
+
+/* Responsive tune-ups */
+@media (max-width: 768px) {
+  body {
+    padding-top: 72px;
+  }
+
+  .container {
+    padding: 0 14px;
+  }
+
+  .nav-bar {
+    gap: 10px;
+  }
+
+  .nav-links {
+    gap: 12px;
+    font-size: 14px;
+  }
+
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .hero {
+    padding: 32px 0 52px;
+  }
+
+  .search-wrap {
+    margin-top: -50px;
+  }
+
+  .cta-box,
+  .auth-card,
+  .aside-card {
+    padding: 18px;
+  }
+
+  .feature-card,
+  .product-card {
+    padding: 14px;
+  }
+
+  .product-card img {
+    height: 160px;
+  }
+
+  .footer {
+    padding: 24px 0 18px;
+  }
+
+  .auth-centered .auth-card {
+    width: 100%;
+  }
+
+  .form-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .primary-btn,
+  .ghost-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-links {
+    gap: 8px;
+  }
+
+  .brand {
+    font-size: 16px;
+  }
+
+  .clock {
+    width: 100%;
+    text-align: left;
+  }
+
+  .search-card,
+  .cta-box,
+  .auth-card,
+  .aside-card {
+    padding: 14px;
+  }
+
+  .hero-content h1 {
+    font-size: 28px;
+  }
+
+  .section-head h2 {
+    font-size: 24px;
+  }
+
+  .product-card img {
+    height: 140px;
   }
 }
