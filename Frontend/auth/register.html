@@ -229,10 +229,17 @@
           const registeredId = data.user?.userId || data.credentials?.userId || "N/A";
           const registeredPassword = data.credentials?.password || payload.password || "your password";
 
-          statusEl.textContent = `Registration successful! Your User ID is ${registeredId} and your password is ${registeredPassword}. Please save both to log in.`;
+          statusEl.textContent = `Registration successful! Your User ID is ${registeredId} and your password is ${registeredPassword}. Redirecting to login...`;
           statusEl.classList.add("success");
-          form.reset();
-          confirmPassword.setCustomValidity("");
+
+          // Store for auto-fill on login and redirect
+          sessionStorage.setItem(
+            "localpick_new_credentials",
+            JSON.stringify({ userId: registeredId, password: registeredPassword })
+          );
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 1200);
         } catch (error) {
           statusEl.textContent = error.message || "Could not register right now.";
           statusEl.classList.add("error");

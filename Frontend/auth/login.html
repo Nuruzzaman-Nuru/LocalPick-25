@@ -137,6 +137,18 @@
         status.classList.toggle("success", !isError);
       };
 
+      // Autofill from registration redirect
+      try {
+        const stored = sessionStorage.getItem("localpick_new_credentials");
+        if (stored) {
+          const creds = JSON.parse(stored);
+          if (creds.userId) form.user_id.value = creds.userId;
+          if (creds.password) form.password.value = creds.password;
+          setStatus(`Use your new ID (${creds.userId || "user"}) to log in.`, false);
+          sessionStorage.removeItem("localpick_new_credentials");
+        }
+      } catch (_e) {}
+
       form.addEventListener("submit", (event) => {
         event.preventDefault();
         if (!form.checkValidity()) {
@@ -171,6 +183,9 @@
                 data.user?.userId || "N/A"
               }).`
             );
+            setTimeout(() => {
+              window.location.href = "../shop/index.html";
+            }, 600);
           })
           .catch((error) => {
             setStatus(error.message || "Login failed. Try again.", true);
