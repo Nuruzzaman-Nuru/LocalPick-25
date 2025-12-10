@@ -11,6 +11,9 @@
 <body class="auth-body auth-centered">
   <header class="nav-shell">
     <div class="container nav-bar">
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <i class="bi bi-list"></i>
+      </button>
       <div class="brand">
         <i class="bi bi-bag-check-fill"></i>
         <span class="brand-name">LocalPick</span>
@@ -104,6 +107,20 @@
 
       updateClock();
       setInterval(updateClock, 1000);
+    })();
+
+    (function () {
+      const toggle = document.querySelector(".nav-toggle");
+      const links = document.querySelector(".nav-links");
+      const actions = document.querySelector(".nav-actions");
+      if (toggle && links && actions) {
+        toggle.addEventListener("click", () => {
+          const isOpen = !links.classList.contains("open");
+          links.classList.toggle("open", isOpen);
+          actions.classList.toggle("open", isOpen);
+          toggle.setAttribute("aria-expanded", isOpen.toString());
+        });
+      }
     })();
 
     (function () {

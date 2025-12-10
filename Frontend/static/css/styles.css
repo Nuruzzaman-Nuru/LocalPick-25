@@ -61,6 +61,20 @@ video {
   flex-wrap: wrap;
 }
 
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #f5f7ff;
+  cursor: pointer;
+  font-size: 20px;
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -837,15 +851,39 @@ video {
     align-items: flex-start;
   }
 
+  .nav-toggle {
+    display: inline-flex;
+  }
+
   .nav-links {
     width: 100%;
     justify-content: flex-start;
     flex-wrap: wrap;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .nav-actions {
     width: 100%;
     justify-content: flex-start;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .nav-links.open,
+  .nav-actions.open {
+    display: flex;
+  }
+
+  .nav-actions .clock {
+    width: 100%;
+  }
+
+  .nav-actions .primary-btn,
+  .nav-actions .ghost-btn {
+    width: 100%;
   }
 
   .search-row {
