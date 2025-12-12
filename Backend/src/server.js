@@ -42,7 +42,6 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/shops", shopRoutes);
 app.use("/api/contact", contactRoutes);
 
-// Global error handler to avoid duplicate responses
 app.use((err, _req, res, _next) => {
   console.error("Unhandled error:", err);
   const status = err.statusCode || err.status || 500;

@@ -93,10 +93,18 @@
       const formTitle = document.getElementById("form-title");
       const productId = qs("id");
       const shopId = getShopId();
+      const statusEl = document.querySelector(".page-status");
 
       if (!shopId) {
-        renderStatus("No shop found. Create your shop in Settings first.", "error");
-        form.style.display = "none";
+        renderStatus(
+          `No shop found. Create your shop in Settings first. <a class="text-link" href="settings.html">Go to Settings</a>`,
+          "error"
+        );
+        form.innerHTML =
+          '<p style="text-align:center;margin:12px 0;">Redirecting to shop settings...</p>';
+        setTimeout(() => {
+          window.location.href = "settings.html";
+        }, 1200);
         return;
       }
 
