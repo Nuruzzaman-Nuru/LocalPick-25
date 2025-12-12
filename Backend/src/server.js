@@ -10,6 +10,7 @@ const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const shopRoutes = require("./routes/shopRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -39,6 +40,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/shops", shopRoutes);
+app.use("/api/contact", contactRoutes);
 
 // Global error handler to avoid duplicate responses
 app.use((err, _req, res, _next) => {

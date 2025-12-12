@@ -80,6 +80,7 @@
   <div data-include="../includes/footer.html" id="footer"></div>
 
   <script src="../static/js/includes.js"></script>
+  <script src="../static/js/shop-api.js"></script>
   <script>
     (function () {
       function pad(num) {
@@ -129,29 +130,18 @@
         };
 
         try {
-          const res = await fetch("/contact", {
+          const data = await apiFetch("/contact", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
             body: JSON.stringify(payload)
           });
 
-          const data = await res.json().catch(() => ({}));
-          const ok = res.ok && data.status === "success";
-
-          if (ok) {
-            form.reset();
-            if (statusEl) {
-              statusEl.textContent = data.message || "Message sent successfully.";
-              statusEl.classList.add("success");
-            } else {
-              alert(data.message || "Message sent successfully.");
-            }
-            return;
+          form.reset();
+          if (statusEl) {
+            statusEl.textContent = data.message || "Message sent successfully.";
+            statusEl.classList.add("success");
+          } else {
+            alert(data.message || "Message sent successfully.");
           }
-
-          throw new Error(data.message || "Unable to send right now.");
         } catch (err) {
           if (statusEl) {
             statusEl.textContent = err.message || "Something went wrong. Please try again later.";

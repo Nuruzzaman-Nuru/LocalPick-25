@@ -83,6 +83,7 @@
   <div data-include="../includes/footer.html"></div>
 
   <script src="../static/js/includes.js"></script>
+  <script src="../static/js/shop-api.js"></script>
   <script>
     (function () {
       const timeEl = document.getElementById("clock-time");
@@ -128,7 +129,6 @@
       if (!form) return;
       const status = document.getElementById("form-status");
       const submitBtn = form.querySelector("button[type='submit']");
-      const API_BASE = "http://localhost:5000/api";
 
       const setStatus = (message, isError = false) => {
         status.textContent = message;
@@ -149,7 +149,7 @@
         }
       } catch (_e) {}
 
-      form.addEventListener("submit", (event) => {
+      form.addEventListener("submit", async (event) => {
         event.preventDefault();
         if (!form.checkValidity()) {
           form.reportValidity();
@@ -164,35 +164,23 @@
           password: form.password.value,
         };
 
-        fetch(`${API_BASE}/auth/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        })
-          .then((response) =>
-            response.json().then((data) => ({ ok: response.ok, data }))
-          )
-          .then(({ ok, data }) => {
-            if (!ok) {
-              throw new Error(data.message || "Invalid credentials.");
-            }
-            localStorage.setItem("localpick_token", data.token);
-            localStorage.setItem("localpick_user", JSON.stringify(data.user));
-            setStatus(
-              `Welcome back, ${data.user?.name || "user"} (ID: ${
-                data.user?.userId || "N/A"
-              }).`
-            );
-            setTimeout(() => {
-              window.location.href = "../shop/index.html";
-            }, 600);
-          })
-          .catch((error) => {
-            setStatus(error.message || "Login failed. Try again.", true);
-          })
-          .finally(() => {
-            submitBtn.disabled = false;
+        try {
+          const data = await apiFetch(`/auth/login`, {
+            method: "POST",
+            body: JSON.stringify(payload),
           });
+          saveAuth(data.user, data.token);
+          setStatus(
+            `Welcome back, ${data.user?.name || "user"} (ID: ${data.user?.userId || "N/A"}).`
+          );
+          setTimeout(() => {
+            window.location.href = "../shop/index.html";
+          }, 600);
+        } catch (error) {
+          setStatus(error.message || "Login failed. Try again.", true);
+        } finally {
+          submitBtn.disabled = false;
+        }
       });
     })();
   </script>

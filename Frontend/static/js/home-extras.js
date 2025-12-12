@@ -48,89 +48,105 @@ document.addEventListener("DOMContentLoaded", () => {
   restart();
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const slider = document.getElementById("product-slider");
-  if (!slider) return;
+(() => {
+  let cleanupProductSlider = null;
 
-  const track = slider.querySelector(".product-track");
-  const slides = Array.from(slider.querySelectorAll(".product-slide"));
-  const dotsWrap = slider.querySelector(".product-dots");
-  const prevBtn = slider.querySelector(".prod-control.prev");
-  const nextBtn = slider.querySelector(".prod-control.next");
+  function initProductSlider() {
+    const slider = document.getElementById("product-slider");
+    if (!slider) return;
 
-  let perView = 4;
-  let position = 0;
+    const track = slider.querySelector(".product-track");
+    const slides = Array.from(slider.querySelectorAll(".product-slide"));
+    const dotsWrap = slider.querySelector(".product-dots");
+    const prevBtn = slider.querySelector(".prod-control.prev");
+    const nextBtn = slider.querySelector(".prod-control.next");
+    if (!track || !slides.length || !dotsWrap) return;
 
-  function calcPerView() {
-    const width = window.innerWidth;
-    if (width <= 640) return 1;
-    if (width <= 900) return 2;
-    if (width <= 1100) return 3;
-    return 4;
-  }
+    if (cleanupProductSlider) cleanupProductSlider();
 
-  function pageCount() {
-    return Math.max(1, Math.ceil(slides.length / perView));
-  }
+    let perView = calcPerView();
+    let position = 0;
 
-  function renderDots() {
-    dotsWrap.innerHTML = "";
-    for (let i = 0; i < pageCount(); i++) {
-      const btn = document.createElement("button");
-      if (i === Math.floor(position / perView)) btn.classList.add("active");
-      btn.addEventListener("click", () => {
-        position = i * perView;
-        clampPosition();
-        move();
+    function calcPerView() {
+      const width = window.innerWidth;
+      if (width <= 640) return 1;
+      if (width <= 900) return 2;
+      if (width <= 1100) return 3;
+      return 4;
+    }
+
+    function pageCount() {
+      return Math.max(1, Math.ceil(slides.length / perView));
+    }
+
+    function renderDots() {
+      dotsWrap.innerHTML = "";
+      for (let i = 0; i < pageCount(); i++) {
+        const btn = document.createElement("button");
+        if (i === Math.floor(position / perView)) btn.classList.add("active");
+        btn.addEventListener("click", () => {
+          position = i * perView;
+          clampPosition();
+          move();
+        });
+        dotsWrap.appendChild(btn);
+      }
+    }
+
+    function clampPosition() {
+      const max = Math.max(0, slides.length - perView);
+      position = Math.min(Math.max(position, 0), max);
+    }
+
+    function move() {
+      const slideWidth = slides[0].getBoundingClientRect().width;
+      const gap = parseFloat(getComputedStyle(track).gap) || 0;
+      const offset = position * (slideWidth + gap);
+      track.style.transform = `translateX(-${offset}px)`;
+      dotsWrap.querySelectorAll("button").forEach((btn, idx) => {
+        btn.classList.toggle("active", idx === Math.floor(position / perView));
       });
-      dotsWrap.appendChild(btn);
     }
-  }
 
-  function clampPosition() {
-    const max = Math.max(0, slides.length - perView);
-    position = Math.min(Math.max(position, 0), max);
-  }
-
-  function move() {
-    const slideWidth = slides[0].getBoundingClientRect().width;
-    const gap = parseFloat(getComputedStyle(track).gap) || 0;
-    const offset = position * (slideWidth + gap);
-    track.style.transform = `translateX(-${offset}px)`;
-    dotsWrap.querySelectorAll("button").forEach((btn, idx) => {
-      btn.classList.toggle("active", idx === Math.floor(position / perView));
-    });
-  }
-
-  function next() {
-    position += perView;
-    clampPosition();
-    move();
-  }
-
-  function prev() {
-    position -= perView;
-    clampPosition();
-    move();
-  }
-
-  function onResize() {
-    const newPerView = calcPerView();
-    if (newPerView !== perView) {
-      perView = newPerView;
+    function next() {
+      position += perView;
       clampPosition();
-      renderDots();
-      move();
-    } else {
       move();
     }
+
+    function prev() {
+      position -= perView;
+      clampPosition();
+      move();
+    }
+
+    function onResize() {
+      const newPerView = calcPerView();
+      if (newPerView !== perView) {
+        perView = newPerView;
+        clampPosition();
+        renderDots();
+        move();
+      } else {
+        move();
+      }
+    }
+
+    perView = calcPerView();
+    renderDots();
+    move();
+
+    prevBtn?.addEventListener("click", prev);
+    nextBtn?.addEventListener("click", next);
+    window.addEventListener("resize", onResize);
+
+    cleanupProductSlider = () => {
+      prevBtn?.removeEventListener("click", prev);
+      nextBtn?.removeEventListener("click", next);
+      window.removeEventListener("resize", onResize);
+    };
   }
 
-  perView = calcPerView();
-  renderDots();
-  move();
-
-  prevBtn?.addEventListener("click", prev);
-  nextBtn?.addEventListener("click", next);
-  window.addEventListener("resize", onResize);
-});
+  window.initProductSlider = initProductSlider;
+  document.addEventListener("DOMContentLoaded", initProductSlider);
+})();

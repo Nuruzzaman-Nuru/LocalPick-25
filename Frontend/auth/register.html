@@ -40,6 +40,8 @@
       <div class="auth-card">
         <p class="eyebrow">Create account</p>
         <h1>Create Account</h1>
+        <div class="form-status" id="credential-banner" aria-live="polite"></div>
+        <div class="form-status" id="register-status" aria-live="polite"></div>
 
         <form class="auth-form" id="register-form" novalidate>
           <label class="input-group">
@@ -114,7 +116,6 @@
             </label>
 
             <button type="submit" class="primary-btn full solid">Register</button>
-            <div class="form-status" id="register-status" aria-live="polite"></div>
           </div>
         </form>
 
@@ -129,6 +130,7 @@
   <div data-include="../includes/footer.html"></div>
 
   <script src="../static/js/includes.js"></script>
+  <script src="../static/js/shop-api.js"></script>
   <script>
     (function () {
       const timeEl = document.getElementById("clock-time");
@@ -176,8 +178,8 @@
       const password = document.getElementById("password");
       const confirmPassword = document.getElementById("confirm-password");
       const statusEl = document.getElementById("register-status");
+      const credentialBanner = document.getElementById("credential-banner");
       const submitBtn = form.querySelector("button[type='submit']");
-      const API_BASE = "http://localhost:5000/api";
 
       function checkPasswords() {
         if (!password.value || !confirmPassword.value) {
@@ -203,6 +205,8 @@
         statusEl.textContent = "Creating your account...";
         statusEl.classList.remove("error", "success");
         statusEl.classList.add("show");
+        credentialBanner.textContent = "";
+        credentialBanner.classList.remove("show", "error", "success");
         submitBtn.disabled = true;
 
         const payload = {
@@ -215,22 +219,19 @@
         };
 
         try {
-          const response = await fetch(`${API_BASE}/auth/register`, {
+          const data = await apiFetch(`/auth/register`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
           });
-
-          const data = await response.json().catch(() => ({}));
-          if (!response.ok) {
-            throw new Error(data.message || "Registration failed. Try again.");
-          }
 
           const registeredId = data.user?.userId || data.credentials?.userId || "N/A";
           const registeredPassword = data.credentials?.password || payload.password || "your password";
 
-          statusEl.textContent = `Registration successful! Your User ID is ${registeredId} and your password is ${registeredPassword}. Redirecting to login...`;
+          credentialBanner.textContent = `Registration successful! User ID: ${registeredId} | Password: ${registeredPassword}`;
+          credentialBanner.classList.add("show", "success");
+          statusEl.textContent = "Redirecting to login...";
           statusEl.classList.add("success");
+          window.scrollTo({ top: 0, behavior: "smooth" });
 
           // Store for auto-fill on login and redirect
           sessionStorage.setItem(

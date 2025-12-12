@@ -192,6 +192,7 @@
       <div class="container">
         <div class="section-head">
           <h2>Featured Products</h2>
+          <p class="section-sub" id="featured-status">Loading featured products...</p>
         </div>
         <div class="product-slider" id="product-slider">
           <button class="prod-control prev" aria-label="Previous products"><i class="bi bi-chevron-left"></i></button>
@@ -313,6 +314,7 @@
 
   <script src="../static/js/includes.js"></script>
   <script src="../static/js/home-extras.js"></script>
+  <script src="../static/js/shop-api.js"></script>
   <script>
     (function () {
       function pad(num) {
@@ -362,29 +364,18 @@
         };
 
         try {
-          const res = await fetch("/contact", {
+          const data = await apiFetch("/contact", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
             body: JSON.stringify(payload)
           });
 
-          const data = await res.json().catch(() => ({}));
-          const ok = res.ok && data.status === "success";
-
-          if (ok) {
-            form.reset();
-            if (statusEl) {
-              statusEl.textContent = data.message || "Message sent successfully.";
-              statusEl.classList.add("success");
-            } else {
-              alert(data.message || "Message sent successfully.");
-            }
-            return;
+          form.reset();
+          if (statusEl) {
+            statusEl.textContent = data.message || "Message sent successfully.";
+            statusEl.classList.add("success");
+          } else {
+            alert(data.message || "Message sent successfully.");
           }
-
-          throw new Error(data.message || "Unable to send right now.");
         } catch (err) {
           if (statusEl) {
             statusEl.textContent = err.message || "Something went wrong. Please try again later.";
@@ -394,6 +385,60 @@
           }
         }
       });
+    })();
+
+    (function () {
+      const slider = document.getElementById("product-slider");
+      if (!slider) return;
+      const track = slider.querySelector(".product-track");
+      if (!track) return;
+      const statusEl = document.getElementById("featured-status");
+
+      function productCard(p) {
+        const price = p.salePrice ?? p.price ?? 0;
+        const inStock = (p.stock ?? 0) > 0;
+        const badgeClass = inStock ? "in-stock" : "out";
+        const badgeText = inStock ? "In Stock" : "Out of Stock";
+        const img = (p.images && p.images[0]) || "https://via.placeholder.com/320x220?text=Product";
+        const desc = p.description || "Available now from this shop.";
+        const link = `../shop/product_details.html?id=${p._id}`;
+        return `<div class="product-slide">
+          <article class="product-card">
+            <div class="badge ${badgeClass}">${badgeText}</div>
+            <img src="${img}" alt="${p.name || "Product"}">
+            <h3>${p.name || "Product"}</h3>
+            <p>${desc}</p>
+            <div class="price-row">
+              <span class="price">Tk ${price}</span>
+              <a class="ghost-btn" href="${link}">View</a>
+            </div>
+          </article>
+        </div>`;
+      }
+
+      async function loadFeatured() {
+        try {
+          const data = await apiFetch("/products?status=active&limit=12");
+          const items = data.items || [];
+          if (!items.length) {
+            if (statusEl) {
+              statusEl.textContent = "No featured products available right now.";
+            }
+            return;
+          }
+          if (statusEl) statusEl.textContent = "";
+          track.innerHTML = items.map(productCard).join("");
+          if (window.initProductSlider) window.initProductSlider();
+        } catch (err) {
+          console.warn("Could not load featured products:", err.message || err);
+          if (statusEl) {
+            statusEl.textContent = "Could not load featured products. Please try again later.";
+            statusEl.classList.add("error");
+          }
+        }
+      }
+
+      loadFeatured();
     })();
   </script>
 </body>

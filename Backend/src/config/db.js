@@ -4,7 +4,7 @@ const { MongoMemoryServer } = require("mongodb-memory-server");
 let memoryServer;
 
 const connectDB = async () => {
-  const uri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/localpick";
+  const uri = process.env.gi|| "mongodb://127.0.0.1:27017/localpick";
 
   try {
     await mongoose.connect(uri);

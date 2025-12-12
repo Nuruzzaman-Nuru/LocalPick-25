@@ -20,6 +20,7 @@
             <span class="eyebrow">About LocalPick</span>
             <h2>We connect you with trusted local shops</h2>
             <p class="section-sub">LocalPick is revolutionizing local shopping by connecting you with nearby shops through an innovative platform. We empower local businesses while giving customers quick, convenient access to what they need.</p>
+            <p class="section-sub" id="api-health">Checking API status...</p>
           </div>
 
           <div class="about-hero">
@@ -94,6 +95,7 @@
   <div data-include="../includes/footer.html" id="footer"></div>
 
   <script src="../static/js/includes.js"></script>
+  <script src="../static/js/shop-api.js"></script>
   <script>
     (function () {
       function pad(num) {
@@ -119,6 +121,20 @@
 
       updateClock();
       setInterval(updateClock, 1000);
+    })();
+
+    (function () {
+      const statusEl = document.getElementById("api-health");
+      if (!statusEl) return;
+      apiFetch("/health")
+        .then((data) => {
+          statusEl.textContent = `API online (${data.status || "ok"})`;
+          statusEl.classList.add("success");
+        })
+        .catch(() => {
+          statusEl.textContent = "API unavailable right now.";
+          statusEl.classList.add("error");
+        });
     })();
   </script>
 </body>
